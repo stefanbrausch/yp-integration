@@ -1,0 +1,37 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+         xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+   <div>
+   <table style="background-color:CORNSILK" >   
+     <tr><td colspan="3" align="middle">
+        <h2>${%1&amp;1 YP Software Asset Information}</h2>  
+       </td></tr>
+    <tr>
+    <td></td><td><b>${%ID}:</b></td><td> <a href="${it.getYpData().permaLink}"> ${it.getId()}</a></td>
+    </tr><tr>
+    <td></td><td><b>${%Name}:</b></td><td> ${it.getYpData().name}</td>
+    </tr><tr>
+    <td></td><td><b>${%Description}:</b></td><td> ${it.getYpData().description}</td>
+    </tr><tr>
+    <td></td><td><b>${%Owner}:</b></td><td> <a href="${it.getPeopleLink()}">${it.getYpData().ownerName}</a></td>  
+    </tr><tr>  
+    <td>
+    <j:if test="${it.hasDifferentScmLink()}">
+    <img src="${resURL}/plugin/yp-integration/img/different-value.png" title="{%YP entry and job configuration are different}" />
+    </j:if></td>
+    <td><b>${%SCM Link}:</b></td><td> <a href="${it.getYpData().scmLink}"> ${it.getYpData().scmLink}</a></td>
+    </tr><tr>
+    <td></td><td><b>${%Doc Link}:</b></td><td> <a href="${it.getYpData().docLink}"> ${it.getYpData().docLink}</a></td>
+    </tr><tr>
+    <td></td><td><b>${%Issue Link}:</b></td><td> <a href="${it.getYpData().issueLink}"> ${it.getYpData().issueLink}</a></td>
+    </tr><tr>
+    <td>
+    <j:if test="${it.hasDifferentCiLink()}">
+    <img src="${resURL}/plugin/yp-integration/img/different-value.png" title="{%YP entry and job configuration are different}" />
+    </j:if></td>
+    <td><b>${%CI Link}:</b></td><td> <a href="${it.getYpData().ciLink}"> ${it.getYpData().ciLink}</a></td>
+    </tr>
+    <tr><td></td></tr>
+    </table>
+    </div>
+</j:jelly>

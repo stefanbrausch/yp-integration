@@ -1,0 +1,6 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <f:entry title="1and1 YP Asset ID">
+      <f:textbox name="id" field="id" value="${Instance.getYpData().id}" />
+    </f:entry>
+</j:jelly>

@@ -1,0 +1,102 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <l:layout xmlns:plugin="/hudson/plugins/javancss/tags">
+        
+        <st:include it="${it.project}" page="sidepanel.jelly"/>
+        <l:main-panel>
+            <h1>${it.displayName}</h1>
+<div>
+     <table valign="middle" align="left" style="background-color:CORNSILK" >   
+     <tr><td colspan="4" align="middle">
+        <h2>${%1&amp;1 YP Software Asset Information}</h2>  
+       </td></tr>
+     
+    <tr>
+    <td></td><td><b>${%ID}:</b></td><td> <a href="${it.getYpData().permaLink}"> ${it.getYPID()}</a></td><td></td>
+    </tr><tr>
+    <td>
+    <j:if test="${it.isNameNewer()}">
+    <img src="${resURL}/plugin/yp-integration/img/new-value.png" title="{%YP entry is newer}" />
+    </j:if></td><td><b>${%Name}:</b></td>
+    <td> ${it.getYpData().name}</td><td></td>
+    </tr><tr>
+    <td>
+    <j:if test="${it.isDescriptionNewer()}">
+    <img src="${resURL}/plugin/yp-integration/img/new-value.png" title="{%YP entry is newer}" />
+    </j:if></td><td><b>${%Description}:</b></td>
+    <td> ${it.getYpData().description}</td><td></td>
+    </tr><tr>
+    <td>
+    <j:if test="${it.isOwnerNewer()}">
+    <img src="${resURL}/plugin/yp-integration/img/new-value.png" title="{%YP entry is newer}" />
+    </j:if></td>
+    <td><b>${%Owner}:</b></td><td> <a href="${it.getPeopleLink()}">${it.getYpData().ownerName}</a></td><td></td>  
+    </tr><tr>  
+    <td nowrap="nowrap">
+    <j:if test="${it.isScmLinkNewer()}">
+    <img src="${resURL}/plugin/yp-integration/img/new-value.png" title="{%YP entry is newer}" />
+    </j:if>
+     <j:if test="${it.hasDifferentScmLink()}">
+    <img src="${resURL}/plugin/yp-integration/img/different-value.png" title="{%YP entry and job configuration are different}" />
+    </j:if>
+    </td>
+    <td><b>${%SCM Link}:</b></td><td> <a href="${it.getYpData().scmLink}"> ${it.getYpData().scmLink}</a></td><td></td>
+    </tr><tr>
+    <td>
+    <j:if test="${it.isDocLinkNewer()}">
+    <img src="${resURL}/plugin/yp-integration/img/new-value.png" title="{%YP entry is newer}" />
+    </j:if></td>
+    <td><b>${%Doc Link}:</b></td><td> <a href="${it.getYpData().docLink}"> ${it.getYpData().docLink}</a></td><td></td>
+    </tr><tr>
+    <td>
+    <j:if test="${it.isIssueLinkNewer()}">
+    <img src="${resURL}/plugin/yp-integration/img/new-value.png" title="{%YP entry is newer}" />
+    </j:if></td>
+    <td><b>${%Issue Link}:</b></td><td> <a href="${it.getYpData().issueLink}"> ${it.getYpData().issueLink}</a></td><td></td>
+    </tr><tr>
+    <td nowrap="nowrap">
+    <j:if test="${it.isCiLinkNewer()}">
+    <img src="${resURL}/plugin/yp-integration/img/new-value.png" title="{%YP entry is newer}" />
+    </j:if>
+    <j:if test="${it.hasDifferentCiLink()}">
+    <img src="${resURL}/plugin/yp-integration/img/different-value.png" title="{%YP entry and job configuration are different}" />
+    </j:if>
+    </td>
+    <td><b>${%CI Link}:</b></td><td> <a href="${it.getYpData().ciLink}"> ${it.getYpData().ciLink}</a></td><td></td>
+    </tr>
+    <tr><td colspan="4" align="right">
+
+            <form method="post" action="fetchAllYPData" name="fetchAllYPData">
+            
+                <table>
+                 <div align="right">
+
+                    <f:entry>
+                        <f:submit value="Fetch Data from YP"/>
+                    </f:entry>
+                    </div>
+                </table>
+            </form>  
+            
+             <j:if test="${it.hasAnyChanges()}">
+<form method="post" action="saveDataToJob" name="saveDataToJob">
+            
+  
+                <table>
+                 
+<div align="right">
+                    <f:entry>
+                        <f:submit value="Save Data To Job"/>
+                    </f:entry>
+                    </div>
+                </table>
+            </form> 
+            </j:if> 
+            </td></tr>
+<tr><td></td></tr>
+            </table>
+            </div>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
