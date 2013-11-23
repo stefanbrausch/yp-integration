@@ -9,7 +9,6 @@ import org.kohsuke.stapler.StaplerResponse;
 
 import hudson.model.Action;
 import hudson.model.AbstractProject;
-import hudson.model.Job;
 
 public class YPIntegrationJobAction implements Action {
 
@@ -18,10 +17,10 @@ public class YPIntegrationJobAction implements Action {
 
     public YPIntegrationJobAction(AbstractProject<?, ?> project) {
         this.project = project;
-        YPIntegrationJobProperty myJobProp = YPIntegrationJobProperty.get(project);
-        if (myJobProp != null)
+        final YPIntegrationJobProperty myJobProp = YPIntegrationJobProperty.get(project);
+        if (myJobProp != null) {
             this.ypData = myJobProp.getYpData();
-//        else ypData = new YPData();
+        }
     }
 
     public String getIconFileName() {
@@ -42,9 +41,7 @@ public class YPIntegrationJobAction implements Action {
 
     public String getYPID() {
 
-        if (YPIntegrationJobProperty.get(project) == null)
-            return null;
-        return YPIntegrationJobProperty.get(project).getId();
+        return YPIntegrationJobProperty.get(project) == null ? null : YPIntegrationJobProperty.get(project).getId();
     }
 
     public YPData getYpData() {
@@ -52,15 +49,15 @@ public class YPIntegrationJobAction implements Action {
         return this.ypData;
 
     }
-    
-    public String getPeopleLink(){
+
+    public String getPeopleLink() {
         return Secrets.PEOPLE_LINK + ypData.getOwnerId();
     }
 
     public void doFetchAllYPData(StaplerRequest req, StaplerResponse rsp) throws ServletException, IOException {
 
         if (getYPID() != null) {
-            FetchDataFromYP ypFetcher = new FetchDataFromYP();
+            final FetchDataFromYP ypFetcher = new FetchDataFromYP();
             this.ypData = ypFetcher.fetchAllYPData(getYPID());
         }
         rsp.sendRedirect("");
@@ -71,40 +68,47 @@ public class YPIntegrationJobAction implements Action {
         rsp.sendRedirect("");
     }
 
-    public boolean isNameNewer(){
+    public boolean isNameNewer() {
         return !(ypData.getName().equals(YPIntegrationJobProperty.get(project).getYpData().getName()));
     }
-    public boolean isOwnerNewer(){
-        return !((ypData.getOwnerName().equals(YPIntegrationJobProperty.get(project).getYpData().getOwnerName()))&&
-                ypData.getOwnerId().equals(YPIntegrationJobProperty.get(project).getYpData().getOwnerId()));
+
+    public boolean isOwnerNewer() {
+        return !((ypData.getOwnerName().equals(YPIntegrationJobProperty.get(project).getYpData().getOwnerName())) && ypData
+                .getOwnerId().equals(YPIntegrationJobProperty.get(project).getYpData().getOwnerId()));
     }
-    public boolean isDescriptionNewer(){
+
+    public boolean isDescriptionNewer() {
         return !(ypData.getDescription().equals(YPIntegrationJobProperty.get(project).getYpData().getDescription()));
     }
-    public boolean isDocLinkNewer(){
+
+    public boolean isDocLinkNewer() {
         return !(ypData.getDocLink().equals(YPIntegrationJobProperty.get(project).getYpData().getDocLink()));
     }
-    public boolean isIssueLinkNewer(){
+
+    public boolean isIssueLinkNewer() {
         return !(ypData.getIssueLink().equals(YPIntegrationJobProperty.get(project).getYpData().getIssueLink()));
     }
-    public boolean isScmLinkNewer(){
+
+    public boolean isScmLinkNewer() {
         return !(ypData.getScmLink().equals(YPIntegrationJobProperty.get(project).getYpData().getScmLink()));
     }
-    public boolean isCiLinkNewer(){
+
+    public boolean isCiLinkNewer() {
         return !(ypData.getCiLink().equals(YPIntegrationJobProperty.get(project).getYpData().getCiLink()));
     }
-    
+
     public boolean hasDifferentScmLink() {
-               return YPIntegrationJobProperty.get(project).hasDifferentScmLink(ypData.getScmLink());
+        return YPIntegrationJobProperty.get(project).hasDifferentScmLink(ypData.getScmLink());
 
     }
 
     public boolean hasDifferentCiLink() {
-       return !(ypData.getCiLink().equals(project.getAbsoluteUrl()));
+        return !(ypData.getCiLink().equals(project.getAbsoluteUrl()));
     }
-    
-    public boolean hasAnyChanges(){
-        return isNameNewer() || isOwnerNewer() || isDescriptionNewer() || isDocLinkNewer() || isIssueLinkNewer() || isScmLinkNewer() || isCiLinkNewer(); 
-        
+
+    public boolean hasAnyChanges() {
+        return isNameNewer() || isOwnerNewer() || isDescriptionNewer() || isDocLinkNewer() || isIssueLinkNewer()
+                || isScmLinkNewer() || isCiLinkNewer();
+
     }
 }

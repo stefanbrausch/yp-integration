@@ -23,6 +23,7 @@ public class YpEngine {
 
     private final String baseurl;
     private final DefaultHttpClient httpClient;
+    private static final int RETURNVALUE200 = 200;
 
     public static YpEngine connect() {
         return YpEngine.connect(Secrets.YP_LINK, Secrets.YP_USER, Secrets.YP_PASSWORD);
@@ -67,7 +68,6 @@ public class YpEngine {
     public void disconnect() {
         httpClient.getConnectionManager().shutdown();
     }
-
 
     public JSONObject getJson(String path) throws IOException {
         return (JSONObject) JSONValue.parse(getString(path));
@@ -123,12 +123,13 @@ public class YpEngine {
                     outputBuffer.append(output + "\n");
                 }
             }
-            if (response.getStatusLine().getStatusCode() != 200) {
+            if (response.getStatusLine().getStatusCode() != RETURNVALUE200) {
                 String responseMessage = "";
                 if (outputBuffer.length() > 0) {
                     responseMessage = " : The error message was: " + outputBuffer.toString();
                 }
-                String errorMessage = "Failed : HTTP error code : " + response.getStatusLine().getStatusCode() + responseMessage;
+                final String errorMessage = "Failed: HTTP error code : " + response.getStatusLine().getStatusCode()
+                        + responseMessage;
                 throw new IOException(errorMessage);
             }
             return outputBuffer.toString();
@@ -137,7 +138,7 @@ public class YpEngine {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    // ignored
+                    Constants.LOGGER.warning("Closing of buffer reader failed");
                 }
             }
         }

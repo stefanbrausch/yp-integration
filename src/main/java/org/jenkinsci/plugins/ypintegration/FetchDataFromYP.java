@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 public class FetchDataFromYP {
 
     public YPData fetchAllYPData(String id) {
-        YPData fetchedData = new YPData(id);
+        final YPData fetchedData = new YPData(id);
         YpEngine yp;
         JSONObject json;
         JSONArray jsonArray;
@@ -35,12 +35,11 @@ public class FetchDataFromYP {
                     .replace("\"", "").replace("\\", "").replace("[", "").replace("]", ""));
 
         } catch (IOException e) {
-            Constants.LOGGER.info("error occurred: " + e.getMessage());
+            Constants.LOGGER.info("Error occurred while YP Data fetching: " + e.getMessage());
             fetchedData.setName(Constants.NOT_FOUND);
             fetchedData.setOwnerName(Constants.NOT_FOUND);
             fetchedData.setOwnerId(Constants.NOT_FOUND);
             fetchedData.setCiLink(Constants.NOT_FOUND);
-            fetchedData.setDescription(Constants.NOT_FOUND);
             fetchedData.setDocLink(Constants.NOT_FOUND);
             fetchedData.setIssueLink(Constants.NOT_FOUND);
             fetchedData.setPermaLink(Constants.NOT_FOUND);
@@ -53,7 +52,7 @@ public class FetchDataFromYP {
     }
 
     private String checkfornull(String value) {
-        if (value.equals("null")) {
+        if (("null").equals(value)) {
             return Constants.NOT_SET;
         }
 

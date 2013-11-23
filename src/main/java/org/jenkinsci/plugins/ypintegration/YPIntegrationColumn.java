@@ -20,12 +20,12 @@ public class YPIntegrationColumn extends ListViewColumn {
         if (!(job instanceof AbstractProject<?, ?>)) {
             return "Not an AbstractProject";
         }
+        final AbstractProject<?, ?> project = (AbstractProject<?, ?>) job;
         try {
-            AbstractProject<?, ?> project = (AbstractProject<?, ?>) job;
             ypId = project.getProperty(YPIntegrationJobProperty.class).getId();
         } catch (NullPointerException e) {
             // values could not be retrieved
-            return "Disabled";
+            return Constants.NOT_SET;
         }
         return ypId;
     }
@@ -40,7 +40,7 @@ public class YPIntegrationColumn extends ListViewColumn {
 
         @Override
         public String getDisplayName() {
-            return "YP ID";// Messages.YPIntegration_Column_Title();
+            return "YP ID";
         }
     }
 }

@@ -10,7 +10,7 @@ public final class Constants {
     
     public static final String NOT_FETCHED = "-not fetched-";
     
-    protected static final Logger LOGGER = Logger
+    static final Logger LOGGER = Logger
             .getLogger(YPIntegrationJobAction.class.getName());
     
 }
