@@ -26,7 +26,8 @@ public class YpEngine {
     private static final int RETURNVALUE200 = 200;
 
     public static YpEngine connect() {
-        return YpEngine.connect(Secrets.YP_LINK, Secrets.YP_USER, Secrets.YP_PASSWORD);
+        final YPIntegrationGlobalConfig config = YPIntegrationGlobalConfig.get();
+        return YpEngine.connect(config.getYpLink(), config.getYpUser(), config.getYpPassword());
     }
 
     public static String categoryLookup(String id) {

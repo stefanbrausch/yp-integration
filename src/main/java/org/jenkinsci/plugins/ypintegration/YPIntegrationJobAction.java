@@ -51,7 +51,8 @@ public class YPIntegrationJobAction implements Action {
     }
 
     public String getPeopleLink() {
-        return Secrets.PEOPLE_LINK + ypData.getOwnerId();
+        final YPIntegrationGlobalConfig config = YPIntegrationGlobalConfig.get();
+        return config.getPeopleLink() + ypData.getOwnerId();
     }
 
     public void doFetchAllYPData(StaplerRequest req, StaplerResponse rsp) throws ServletException, IOException {

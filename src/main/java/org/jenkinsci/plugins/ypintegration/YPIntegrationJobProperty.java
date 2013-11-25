@@ -58,13 +58,14 @@ public class YPIntegrationJobProperty extends JobProperty<AbstractProject<?, ?>>
     }
 
     public String getPeopleLink() {
-        return Secrets.PEOPLE_LINK + ypData.getOwnerId();
+        final YPIntegrationGlobalConfig config = YPIntegrationGlobalConfig.get();
+        return config.getPeopleLink() + ypData.getOwnerId();
     }
 
     @Override
     public JobProperty<?> reconfigure(StaplerRequest req, JSONObject form) throws Descriptor.FormException {
         final String formId = (req.bindJSON(YPIntegrationJobProperty.class, form)).getId();
-        if (id.equals(formId)) {
+        if (id != null && id.equals(formId)) {
             return new YPIntegrationJobProperty(id, ypData);
         }
 

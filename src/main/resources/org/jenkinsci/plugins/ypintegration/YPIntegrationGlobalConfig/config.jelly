@@ -1,0 +1,21 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" 
+xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  	
+  	<f:section title="${%YP Integration}">
+	 	
+       <f:entry title="${%Link to YP}">
+        	<f:textbox field="ypLink" name="ypLink" value="${it.ypLink}" />
+       </f:entry>
+       <f:entry title="${%YP User Name}">
+            <f:textbox field="ypUser" name="ypUser" value="${it.ypUser}" />
+       </f:entry>
+       <f:entry title="${%YP User Password}">
+            <f:password field="ypPassword" name="ypPassword" value="${it.ypPassword}" />
+       </f:entry>
+       <f:entry title="${%Link to People (Inside)}">
+            <f:textbox field="peopleLink" name="peopleLink" value="${it.peopleLink}" />
+       </f:entry>
+  
+
+	</f:section> 
+</j:jelly>
